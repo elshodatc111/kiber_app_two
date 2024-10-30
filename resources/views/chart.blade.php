@@ -98,17 +98,18 @@
                       <th>Rasmiy qidiruvdagilar soni</th>
                       <th>Qidiruv bo’lishi kutilayotganlar</th>
                     </tr>
+                    @foreach($coato as $item)
                     <tr>
-                      <td>Qarshi shaxar</td>
-                      <td>15</td>
-                      <td>20</td>
+                      <td>{{ $item['name'] }}</td>
+                      <td>{{ $item['pedding'] }}</td>
+                      <td>{{ $item['rasmiy'] }}</td>
                     </tr>
-
+                    @endforeach
                     
                     <tr>
                       <th>Jami</th>
-                      <th>15</th>
-                      <th>20</th>
+                      <th>{{ $count_pedding }}</th>
+                      <th>{{ $count_rasmiy }}</th>
                     </tr>
                 </table>
               </div>

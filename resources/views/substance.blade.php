@@ -85,7 +85,19 @@
       </div>
     </nav>
     <div class="container-fluid py-2">
-      
+      @if (Session::has('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="bi bi-check-circle me-1"></i>
+              {{Session::get('success') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      @elseif (Session::has('error'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="bi bi-check-circle me-1"></i>
+              {{Session::get('error') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      @endif
       <div class="row mb-4">
         <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
           <div class="card">
@@ -99,16 +111,22 @@
                       <th>Created</th>
                       <th>Deleted</th>
                     </tr>
+                    @forelse($Substance as $item)
                     <tr>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
+                      <td>{{ $loop->index+1 }}</td>
+                      <td>{{ $item['substance'] }}</td>
+                      <td>{{ $item['created_at'] }}</td>
                       <td>
-                        <form action="" method="post">
+                        <form action="{{ route('substance_delete') }}" method="post">
+                          @csrf 
+                          <input type="hidden" name="id" value="{{ $item['id'] }}">
                           <button class="btn btn-danger m-0 py-0">delete</button>
                         </form>
                       </td>
                     </tr>
+                    @empty
+
+                    @endforelse
                 </table>
               </div>
             </div>
@@ -118,9 +136,10 @@
           <div class="card h-100">
             <div class="card-header pb-0">
               <h6>Create Substance</h6>
-              <form action="#" method="post">
+              <form action="{{ route('substance_create') }}" method="post">
+                @csrf 
                 <label for="">Substance</label>
-                <textarea type="text" required name="" style="border:1px solid black" class="form-control"></textarea>
+                <textarea type="text" required name="substance" style="border:1px solid black" class="form-control"></textarea>
                 <button class="btn btn-primary mt-2 w-100">Saqlash</button>
               </form>
             </div>

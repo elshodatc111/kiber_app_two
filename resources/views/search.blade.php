@@ -85,7 +85,19 @@
       </div>
     </nav>
     <div class="container-fluid py-2">
-      
+    @if (Session::has('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="bi bi-check-circle me-1"></i>
+              {{Session::get('success') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      @elseif (Session::has('error'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="bi bi-check-circle me-1"></i>
+              {{Session::get('error') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      @endif      
       <div class="row mb-4">
         <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
           <div class="card">
@@ -99,21 +111,31 @@
                       <th>Substance</th>
                       <th>FIO</th>
                       <th>Type</th>
-                      <th>Created</th>
                       <th>Deleted</th>
                     </tr>
+                    @forelse($Search as $item)
                     <tr>
-                      <td>1</td>
-                      <td>1wwwww</td>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
+                      <td>{{ $loop->index+1 }}</td>
+                      <td>{{ $item['name'] }}</td>
+                      <td>{{ $item['substance'] }}</td>
+                      <td>{{ $item['fio']}}</td>
                       <td>
-                        <a href="search_show.html" class="btn btn-primary m-0 py-0">show</a>
+                        @if($item['type']==1)
+                          Rasmiy qidiruv
+                        @else
+                          Qidiruv bo'lishi kutilmoqda
+                        @endif
+                      </td>
+                      <td>
+                        <a href="{{ route('search_show',$item['id']) }}" class="btn btn-primary m-0 py-0">show</a>
                         
                       </td>
                     </tr>
+                    @empty
+                      <tr>
+                        <td colspan=7 class="text-center">Not fount search</td>
+                      </tr>
+                    @endforelse
                 </table>
               </div>
             </div>
@@ -123,26 +145,37 @@
           <div class="card h-100">
             <div class="card-header pb-0">
               <h6>Update Search</h6>
-              <form action="#" method="post">
-                <label for="">Region</label>
-                <select name="" required style="border:1px solid black" class="form-select">
+              <form action="{{ route('search_create') }}" method="post" enctype="multipart/form-data">
+                @csrf 
+                <label for="region_id">Region</label>
+                <select name="region_id" required style="border:1px solid black" class="form-select">
                   <option value="">choose</option>
+                  @foreach($Region as $item)
+                    <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                  @endforeach
                 </select>
-                <label for="">FIO</label>
-                <input type="text" required style="border: 1px solid black;" class="form-control">
-                <label for="">Photo (JPG)</label>
-                <input type="file" required style="border: 1px solid black;" class="form-control">
-                <label for="">Birthday</label>
-                <input type="date" required style="border: 1px solid black;" class="form-control">
-                <label for="">Substance</label>
-                <select name="" required style="border:1px solid black" class="form-select">
+                <label for="fio">FIO</label>
+                <input type="text" name="fio" required style="border: 1px solid black;" class="form-control">
+                <label for="adress">Address</label>
+                <input type="text" name="adress" required style="border: 1px solid black;" class="form-control">
+                <label for="photo">Photo (JPG)</label>
+                <input type="file" name="photo" required style="border: 1px solid black;" class="form-control">
+                <label for="birthday">Birthday</label>
+                <input type="date" name="birthday" required style="border: 1px solid black;" class="form-control">
+                <label for="substance">Substance</label>
+                <select name="substance" required style="border:1px solid black" class="form-select">
                   <option value="">choose</option>
+                  @foreach($Substance as $item)
+                    <option value="{{ $item['substance'] }}">{{ $item['substance'] }}</option>
+                  @endforeach
                 </select>
-                <label for="">QYJ time</label>
-                <input type="text" required style="border: 1px solid black;" class="form-control">
-                <label for="">Type</label>
-                <select name="" required style="border:1px solid black" class="form-select">
+                <label for="qyj">QYJ time</label>
+                <input type="text" name="qyj" required style="border: 1px solid black;" class="form-control">
+                <label for="type">Type</label>
+                <select name="type" required style="border:1px solid black" class="form-select">
                   <option value="">choose</option>
+                  <option value="1">Rasmiy qidiruv</option>
+                  <option value="2">Qidiruv bo'lishi kutilmoqda</option>
                 </select>
                 <button class="btn btn-primary mt-2 w-100">Save</button>
               </form>
