@@ -12,4 +12,7 @@ Route::post('/login', [ApiController::class, 'login']);
 
 Route::middleware('auth:sanctum')->post('/logout', [ApiController::class, 'logout']);
 
-Route::middleware('auth:sanctum')->get('/alluser', [ApiController::class, 'alluser']);
+Route::middleware('auth:sanctum')->get('/search', [ApiController::class, 'search']);
+Route::middleware('auth:sanctum')->get('/search_show/{id}', [ApiController::class, 'search_show']);
+
+Route::middleware('auth:sanctum')->get('/charts', [ApiController::class, 'charts']);
