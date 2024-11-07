@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ChildController;
 
 Auth::routes();
 
@@ -26,3 +27,7 @@ Route::post('/search_update_image', [HomeController::class, 'search_update_image
 Route::post('/search_delete', [HomeController::class, 'search_delete'])->name('search_delete');
 
 Route::get('/chart', [HomeController::class, 'chart'])->name('chart');
+
+Route::get('/child', [ChildController::class, 'child'])->name('child');
+Route::post('/child_create', [ChildController::class, 'child_create'])->name('child_create');
+Route::post('/child_delete', [ChildController::class, 'child_delete'])->name('child_delete');

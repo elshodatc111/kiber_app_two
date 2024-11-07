@@ -16,3 +16,5 @@ Route::middleware('auth:sanctum')->get('/search', [ApiController::class, 'search
 Route::middleware('auth:sanctum')->get('/search_show/{id}', [ApiController::class, 'search_show']);
 
 Route::middleware('auth:sanctum')->get('/charts', [ApiController::class, 'charts']);
+
+Route::middleware('auth:sanctum')->get('/child', [ApiController::class, 'child']);

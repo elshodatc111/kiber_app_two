@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Search;
 use App\Models\Region;
+use App\Models\Child;
 use Illuminate\Support\Facades\Hash;
 
 class ApiController extends Controller
@@ -84,6 +85,14 @@ class ApiController extends Controller
             'search' => $coato,
             'count_rasmiy' => $count_rasmiy,
             'count_pedding' => $count_pedding,
+        ], 200);
+    }
+
+    public function child(){
+        $Child = Child::join('regions','regions.id','=','children.region_id')
+            ->Select('children.id','children.fio','children.photo','children.birthday','children.about','regions.name')->get();
+        return response()->json([
+            'child' => $Child
         ], 200);
     }
 }

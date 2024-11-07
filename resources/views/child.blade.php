@@ -30,7 +30,7 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Search</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Child</a></li>
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -49,34 +49,84 @@
       </div>
     </nav>
     <div class="container-fluid py-2">
-      
+    @if (Session::has('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="bi bi-check-circle me-1"></i>
+              {{Session::get('success') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      @elseif (Session::has('error'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="bi bi-check-circle me-1"></i>
+              {{Session::get('error') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      @endif      
       <div class="row mb-4">
-        <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+        <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
           <div class="card">
             <div class="card-header pb-0">
-              <h6>All Search</h6>
+              <h6>All Child</h6>
               <div class="table-responsive p-0">
                 <table class="table table-bordered text-center" border="1" style="font-size:10px;">
                     <tr>
+                      <th>#</th>
+                      <th>Image</th>
+                      <th>FIO</th>
                       <th>Region</th>
-                      <th>Rasmiy qidiruvdagilar soni</th>
-                      <th>Qidiruv bo’lishi kutilayotganlar</th>
+                      <th>Birthday</th>
+                      <th>About</th>
+                      <th>Deleted</th>
                     </tr>
-                    @foreach($coato as $item)
+                    @forelse($Child as $item)
                     <tr>
+                      <td>{{ $loop->index+1 }}</td>
+                      <td><img src="./photo/{{ $item['photo'] }}" style="width:50px;"></td>
+                      <td>{{ $item['fio'] }}</td>
                       <td>{{ $item['name'] }}</td>
-                      <td>{{ $item['pedding'] }}</td>
-                      <td>{{ $item['rasmiy'] }}</td>
+                      <td>{{ $item['birthday'] }}</td>
+                      <td>{{ $item['about'] }}</td>
+                      <td>
+                        <form action="{{ route('child_delete') }}" method="post">
+                          @csrf 
+                          <input type="hidden" name="id" value="{{ $item['id'] }}">
+                          <button type="submit" class="btn btn-danger m-0 py-0">delete</button>
+                        </form>
+                      </td>
                     </tr>
-                    @endforeach
-                    
+                    @empty
                     <tr>
-                      <th>Jami</th>
-                      <th>{{ $count_pedding }}</th>
-                      <th>{{ $count_rasmiy }}</th>
+                      <td colspan=7 class="text-center">Not found child</td>
                     </tr>
+                    @endforelse
                 </table>
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100">
+            <div class="card-header pb-0">
+              <h6>Create Search</h6>
+              <form action="{{ route('child_create') }}" method="post" enctype="multipart/form-data">
+                @csrf 
+                <label for="region_id">Region</label>
+                <select name="region_id" required style="border:1px solid black" class="form-select">
+                  <option value="">choose</option>
+                  @foreach($Region as $item)
+                    <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                  @endforeach
+                </select>
+                <label for="fio">FIO</label>
+                <input type="text" name="fio" required style="border: 1px solid black;" class="form-control">
+                <label for="photo">Photo (JPG)</label>
+                <input type="file" name="photo" required style="border: 1px solid black;" class="form-control">
+                <label for="birthday">Birthday</label>
+                <input type="date" name="birthday" required style="border: 1px solid black;" class="form-control">
+                <label for="about">About</label>
+                <textarea name="about" required style="border: 1px solid black;" class="form-control"></textarea>
+                <button class="btn btn-primary mt-2 w-100">Save</button>
+              </form>
             </div>
           </div>
         </div>
