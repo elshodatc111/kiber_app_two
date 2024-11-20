@@ -51,10 +51,9 @@
     <div class="container-fluid py-2">
       
       <div class="row mb-4">
-        <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+        <div class="col-lg-7 col-md-6 mb-md-0 mb-4">
           <div class="card">
             <div class="card-header">
-              <h6>Search Person</h6>
               <div class="row">
                 <div class="col-4">
                   <img src="../photo/{{ $Search['photo'] }}" style="width:100%">
@@ -62,70 +61,104 @@
                     @csrf 
                     <input type="hidden" name="id" value="{{ $Search['id'] }}">
                     <input type="file" name="photo" required style="border:1px solid black" class="form-control mt-2">
-                    <button class="btn btn-primary w-100">Update Photo</button>
+                    <button class="btn btn-primary w-100">Rasmini yangilash</button>
                   </form>
                 </div>
-                <div class="col-4">
+                <div class="col-8">
                   <h5>{{ $Search['fio'] }}</h5>
-                  <p class="mb-1 mt-0"><b class="m-0 p-0">Region: </b>{{ $Search['name'] }}</p>
+                  <p class="mb-1 mt-0"><b class="m-0 p-0">Hudud: </b>{{ $Search['name'] }}</p>
                   <p class="mb-1 mt-0"><b class="m-0 p-0">FIO: </b>{{ $Search['fio'] }}</p>
-                  <p class="mb-1 mt-0"><b class="m-0 p-0">Birthday: </b>{{ $Search['birthday'] }}</p>
-                  <p class="mb-1 mt-0"><b class="m-0 p-0">Address: </b>{{ $Search['adress'] }}</p>
+                  <p class="mb-1 mt-0"><b class="m-0 p-0">Tug'ilgan kun: </b>{{ $Search['birthday'] }}</p>
+                  <p class="mb-1 mt-0"><b class="m-0 p-0">Manzil: </b>{{ $Search['adress'] }}</p>
                   <p class="mb-1 mt-0"><b class="m-0 p-0">Substance: </b>{{ $Search['substance'] }}</p>
-                  <p class="mb-1 mt-0"><b class="m-0 p-0">QYJ time: </b>{{ $Search['qyj'] }}</p>
-                  <p class="mb-1 mt-0"><b class="m-0 p-0">Type: </b>
+                  <p class="mb-1 mt-0"><b class="m-0 p-0">QYJ: </b>{{ $Search['qyj'] }}</p>
+                  <p class="mb-1 mt-0"><b class="m-0 p-0">Qidruv turi: </b>
                     @if($Search['type']==1)
                       Rasmiy qidiruv
-                    @else 
+                    @elseif($Search['type']==2) 
                       Qidiruv bo'lishi kutilmoqda
+                    @else 
+                      Qidruvdagi shaxs topildi
                     @endif
                   </p>
                   <form action="{{ route('search_delete') }}" method="post" style="display: inline;">
                     @csrf 
                     <input type="hidden" name="id" value="{{ $Search['id'] }}">
-                    <button class="btn btn-danger m-0 py-0">delete</button>
+                    <button class="btn btn-danger m-0 py-0">Qidruvdagi shaxsni o'chirish</button>
                   </form>
+                </div>
+                <hr style="color:red">
+                <hr>
+                <div class="col-12">
+                  <h6>Qidruvdagi shaxs haqida</h6>
+                  <div class="table-responsive">
+                  <table class="table table-bordered" style="font-size:12px;">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Qidruvdagi shaxs haqida</th>
+                        <th>Hodim</th>
+                        <th>Telefon raqam</th>
+                        <th>Habar vaqti</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @forelse($Message as $item)
+                      <tr class="m-0 p-0">
+                        <td class="m-0 p-0">{{ $loop->index+1 }}</td>
+                        <td class="m-0 p-0">{{ $item['text'] }}</td>
+                        <td class="m-0 p-0">{{ $item['name'] }}</td>
+                        <td class="m-0 p-0">{{ $item['phone'] }}</td>
+                        <td class="m-0 p-0">{{ $item['created_at'] }}</td>
+                      </tr>
+                      @empty
+
+                      @endforelse
+                    </tbody>
+                  </table>
+                </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-5 col-md-6">
           <div class="card h-100">
             <div class="card-header pb-0">
-              <h6>Update Search</h6>
+              <h6>Qidruvdagi shaxs ma'lumotlarini yangilash</h6>
               <form action="{{ route('search_update') }}" method="post">
                 @csrf 
                 <input type="hidden" name="id" value="{{ $Search['id'] }}">
-                <label for="region_id">Region</label>
+                <label for="region_id">Hudud</label>
                 <select name="region_id" required style="border:1px solid black" class="form-select">
-                  <option value="">choose</option>
+                  <option value="">tanlang</option>
                   @foreach($Region as $item)
                     <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
                   @endforeach
                 </select>
                 <label for="fio">FIO</label>
                 <input type="text" name="fio" required value="{{ $Search['fio'] }}" style="border: 1px solid black;" class="form-control">
-                <label for="adress">Address</label>
+                <label for="adress">Manzil</label>
                 <input type="text" name="adress" required value="{{ $Search['adress'] }}" style="border: 1px solid black;" class="form-control">
-                <label for="birthday">Birthday</label>
+                <label for="birthday">Tug'ilgan haqida</label>
                 <input type="date" name="birthday" required value="{{ $Search['birthday'] }}" style="border: 1px solid black;" class="form-control">
                 <label for="substance">Substance</label>
                 <select name="substance" required style="border:1px solid black" class="form-select">
-                  <option value="">choose</option>
+                  <option value="">tanlang</option>
                   @foreach($Substance as $item)
                     <option value="{{ $item['substance'] }}">{{ $item['substance'] }}</option>
                   @endforeach
                 </select>
-                <label for="qyj">QYJ time</label>
+                <label for="qyj">QYJ</label>
                 <input type="text" name="qyj" value="{{ $Search['qyj'] }}" required style="border: 1px solid black;" class="form-control">
-                <label for="type">Type</label>
+                <label for="type">Qidruv turi</label>
                 <select name="type" required style="border:1px solid black" class="form-select">
-                  <option value="">choose</option>
+                  <option value="">tanlang</option>
                   <option value="1">Rasmiy qidiruv</option>
                   <option value="2">Qidiruv bo'lishi kutilmoqda</option>
+                  <option value="3">Qidruvdagi shaxs topildi</option>
                 </select>
-                <button class="btn btn-primary mt-2 w-100">Save</button>
+                <button class="btn btn-primary mt-2 w-100">O'zgarishlarni saqlash</button>
               </form>
             </div>
           </div>

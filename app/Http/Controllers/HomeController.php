@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Region;
 use App\Models\Substance;
 use App\Models\Search;
+use App\Models\Message;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -91,7 +92,7 @@ class HomeController extends Controller{
     public function search(){
         $Substance = Substance::get();
         $Region = Region::get();
-        $Search = Search::join('regions','regions.id','=','searches.region_id')->Select('searches.fio','searches.id','searches.type','searches.substance','regions.name')->get();
+        $Search = Search::join('regions','regions.id','=','searches.region_id')->where('searches.type','!=','3')->Select('searches.fio','searches.id','searches.type','searches.substance','regions.name')->get();
         return view('search',compact('Substance','Region','Search'));
     }
     public function search_create(Request $request){
@@ -122,8 +123,15 @@ class HomeController extends Controller{
     public function search_show($id){
         $Substance = Substance::get();
         $Region = Region::get();
+        $Message = Message::where('messages.search_id',$id)->join('users','messages.user_id','=','users.id')->get();
+        //dd($Message);
         $Search = Search::join('regions','regions.id','=','searches.region_id')->Select('searches.fio','searches.qyj','searches.birthday','searches.photo','searches.adress','searches.id','searches.type','searches.substance','regions.name')->where('searches.id',$id)->first();
-        return view('search_show',compact('Substance','Region','Search'));
+        return view('search_show',compact('Substance','Region','Search','Message'));
+    }
+    public function message(){
+        $Message = Message::join('users','messages.user_id','=','users.id')->join('searches','messages.search_id','=','searches.id')->orderBy('messages.created_at', 'desc')->get();
+        //dd($Message);
+        return view('message',compact('Message'));
     }
     public function search_update(Request $request){
         $request->validate([

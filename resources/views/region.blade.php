@@ -31,7 +31,7 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Region</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Hududlar</a></li>
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -67,14 +67,14 @@
         <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
           <div class="card">
             <div class="card-header pb-0">
-              <h6>All region</h6>
+              <h6>Hududlar</h6>
               <div class="table-responsive p-0">
                 <table class="table table-bordered text-center" border="1" style="font-size:10px;">
                     <tr>
                       <th>#</th>
-                      <th>Region code</th>
-                      <th>Region name</th>
-                      <th>Created</th>
+                      <th>Hudud kodi</th>
+                      <th>Hudud nomi</th>
+                      <th>Hudud yaratildi</th>
                       <th>Deleted</th>
                     </tr>
                     @forelse($Region as $item)
@@ -87,12 +87,14 @@
                         <form action="{{ route('region_deleted') }}" method="post">
                           @csrf 
                           <input type="hidden" name="id" value="{{ $item['id'] }}">
-                          <button type="submit" class="btn btn-danger m-0 py-0">delete</button>
+                          <button type="submit" class="btn btn-danger m-0 py-0">del</button>
                         </form>
                       </td>
                     </tr>
                     @empty
-
+                    <tr>
+                      <td colspan=5 class="text-center">Hududlar mavjud emas</td>
+                    </tr>
                     @endforelse
                 </table>
               </div>
@@ -102,14 +104,14 @@
         <div class="col-lg-4 col-md-6">
           <div class="card h-100">
             <div class="card-header pb-0">
-              <h6>Create Region</h6>
+              <h6>Yangi hudud</h6>
               <form action="{{ route('region_create') }}" method="post">
                 @csrf 
-                <label for="">Region code</label>
+                <label for="">Hudud kodi</label>
                 <input type="number" required name="coato" style="border:1px solid black" class="form-control">
-                <label for="">Region nume</label>
+                <label for="">Hudud nomi</label>
                 <input type="text" required name="name" style="border:1px solid black" class="form-control">
-                <button class="btn btn-primary mt-2 w-100">Saqlash</button>
+                <button class="btn btn-primary mt-2 w-100">Hududni saqlash</button>
               </form>
             </div>
           </div>

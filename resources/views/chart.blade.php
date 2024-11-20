@@ -30,7 +30,7 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Search</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Statistika</a></li>
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -54,7 +54,7 @@
         <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
           <div class="card">
             <div class="card-header pb-0">
-              <h6>All Search</h6>
+              <h6>Statistika</h6>
               <div class="table-responsive p-0">
                 <table class="table table-bordered text-center" border="1" style="font-size:10px;">
                     <tr>

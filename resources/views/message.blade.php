@@ -14,12 +14,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link id="pagestyle" href="assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
 </head>
-
 <body class="g-sidenav-show  bg-gray-100">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2  bg-white my-2" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand px-4 py-3 m-0" href="{{ route('home') }}">
+      <a class="navbar-brand px-4 py-3 m-0" href="index.html">
         <span class="ms-1 text-sm text-dark">Creative Tim</span>
       </a>
     </div>
@@ -31,7 +30,7 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Barcha hodimlar</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Qidruv haqida xabarlar</a></li>
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -50,7 +49,7 @@
       </div>
     </nav>
     <div class="container-fluid py-2">
-      @if (Session::has('success'))
+    @if (Session::has('success'))
           <div class="alert alert-success alert-dismissible fade show" role="alert">
               <i class="bi bi-check-circle me-1"></i>
               {{Session::get('success') }}
@@ -62,62 +61,40 @@
               {{Session::get('error') }}
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
-      @endif
-      <div class="row mb-4">
-        <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+      @endif      
           <div class="card">
             <div class="card-header pb-0">
-              <h6>Barcha hodimlar</h6>
+              <h6>Qidruv haqida xabarlar</h6>
               <div class="table-responsive p-0">
                 <table class="table table-bordered text-center" border="1" style="font-size:10px;">
                     <tr>
                       <th>#</th>
-                      <th>FIO</th>
-                      <th>Guvohnama raqami</th>
-                      <th>Ro'yhatga olindi</th>
-                      <th>Deleted</th>
+                      <th>Hodim</th>
+                      <th>Qidruvdagi shaxs</th>
+                      <th>Qidruvdagi shaxs haqida</th>
+                      <th>Hodim bilan bog'lanish</th>
+                      <th></th>
                     </tr>
-                    @forelse($User as $item)
+                    @forelse($Message as $item)
                     <tr>
-                      <td>{{ $loop->index+1 }}</td>
+                      <td>{{$loop->index+1}}</td>
                       <td>{{ $item['name'] }}</td>
-                      <td>{{ $item['email'] }}</td>
-                      <td>{{ $item['created_at'] }}</td>
-                      <td>
-                        <form action="{{ route('create_user_deleted') }}" method="post">
-                          @csrf 
-                          <input type="hidden" name="id" value="{{ $item['id'] }}">
-                          <button class="btn btn-danger m-0 py-0">del</button>
-                        </form>
-                      </td>
+                      <td>{{ $item['fio'] }}</td>
+                      <td>{{ $item['text'] }}</td>
+                      <td>{{ $item['phone'] }}</td>
+                      <td><a href="{{ route('search_show',$item->search_id) }}">Batafsil</a></td>
                     </tr>
-                    @empty 
-                      <tr>
-                        <td colspan=5 class="text-center"> Hodimlar mavjud emas</td>
-                      </tr>
+                    @empty
+                    <tr>
+                      <td colspan=6 class="text-center">Qidruvdagi shaxslarga oid malumotlar mavjud emas.</td>
+                    </tr>
                     @endforelse
+                  
                 </table>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="card h-100">
-            <div class="card-header pb-0">
-              <h6>Yangi hodim qo'shish</h6>
-              <form action="{{ route('create_user') }}" method="post">
-                @csrf 
-                <label for="">Hodimning FIO</label>
-                <input type="text" required name="name" style="border:1px solid black" class="form-control">
-                <label for="">Guvohnama raqami</label>
-                <input type="text" required name="email" style="border:1px solid black" class="form-control">
-                <label for="">Jeton raqami</label>
-                <input type="text" required name="password" style="border:1px solid black" class="form-control">
-                <button class="btn btn-primary mt-2 w-100">Hodimni saqlash</button>
-              </form>
-            </div>
-          </div>
-        </div>
+            
+        
       </div>
     </div>
   </main>

@@ -30,7 +30,7 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Search</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Qidruvdagi shaxslar</a></li>
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -66,15 +66,15 @@
         <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
           <div class="card">
             <div class="card-header pb-0">
-              <h6>All Search</h6>
+              <h6>Qidruvdagi shaxslar</h6>
               <div class="table-responsive p-0">
                 <table class="table table-bordered text-center" border="1" style="font-size:10px;">
                     <tr>
                       <th>#</th>
-                      <th>Region</th>
+                      <th>Hudud</th>
                       <th>Substance</th>
                       <th>FIO</th>
-                      <th>Type</th>
+                      <th>Qidruv turi</th>
                       <th>Deleted</th>
                     </tr>
                     @forelse($Search as $item)
@@ -92,12 +92,11 @@
                       </td>
                       <td>
                         <a href="{{ route('search_show',$item['id']) }}" class="btn btn-primary m-0 py-0">show</a>
-                        
                       </td>
                     </tr>
                     @empty
                       <tr>
-                        <td colspan=7 class="text-center">Not fount search</td>
+                        <td colspan=7 class="text-center">Qidruvdagi shaxslar mavjud emas.</td>
                       </tr>
                     @endforelse
                 </table>
@@ -108,40 +107,40 @@
         <div class="col-lg-4 col-md-6">
           <div class="card h-100">
             <div class="card-header pb-0">
-              <h6>Create Search</h6>
+              <h6>Yangi qidruv qo'shish</h6>
               <form action="{{ route('search_create') }}" method="post" enctype="multipart/form-data">
                 @csrf 
-                <label for="region_id">Region</label>
+                <label for="region_id">Hududni tanlang</label>
                 <select name="region_id" required style="border:1px solid black" class="form-select">
-                  <option value="">choose</option>
+                  <option value="">tanlang</option>
                   @foreach($Region as $item)
                     <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
                   @endforeach
                 </select>
                 <label for="fio">FIO</label>
                 <input type="text" name="fio" required style="border: 1px solid black;" class="form-control">
-                <label for="adress">Address</label>
+                <label for="adress">Manzil</label>
                 <input type="text" name="adress" required style="border: 1px solid black;" class="form-control">
-                <label for="photo">Photo (JPG)</label>
+                <label for="photo">Rasmi (JPG)</label>
                 <input type="file" name="photo" required style="border: 1px solid black;" class="form-control">
-                <label for="birthday">Birthday</label>
+                <label for="birthday">Tug'ilgan kuni</label>
                 <input type="date" name="birthday" required style="border: 1px solid black;" class="form-control">
                 <label for="substance">Substance</label>
                 <select name="substance" required style="border:1px solid black" class="form-select">
-                  <option value="">choose</option>
+                  <option value="">tanlang</option>
                   @foreach($Substance as $item)
                     <option value="{{ $item['substance'] }}">{{ $item['substance'] }}</option>
                   @endforeach
                 </select>
-                <label for="qyj">QYJ time</label>
+                <label for="qyj">QYJ</label>
                 <input type="text" name="qyj" required style="border: 1px solid black;" class="form-control">
-                <label for="type">Type</label>
+                <label for="type">Qidruv turini tanlang</label>
                 <select name="type" required style="border:1px solid black" class="form-select">
-                  <option value="">choose</option>
+                  <option value="">tanlang</option>
                   <option value="1">Rasmiy qidiruv</option>
                   <option value="2">Qidiruv bo'lishi kutilmoqda</option>
                 </select>
-                <button class="btn btn-primary mt-2 w-100">Save</button>
+                <button class="btn btn-primary mt-2 w-100">Qidruvni saqlash</button>
               </form>
             </div>
           </div>

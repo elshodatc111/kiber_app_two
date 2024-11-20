@@ -19,6 +19,8 @@ Route::get('/substance', [HomeController::class, 'substance'])->name('substance'
 Route::post('/substance_create', [HomeController::class, 'substance_create'])->name('substance_create');
 Route::post('/substance_delete', [HomeController::class, 'substance_delete'])->name('substance_delete');
 
+Route::get('/message', [HomeController::class, 'message'])->name('message');
+
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::post('/search_create', [HomeController::class, 'search_create'])->name('search_create');
 Route::get('/search_show/{id}', [HomeController::class, 'search_show'])->name('search_show');

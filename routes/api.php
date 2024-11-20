@@ -10,11 +10,11 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/login', [ApiController::class, 'login']);
 
-Route::middleware('auth:sanctum')->post('/logout', [ApiController::class, 'logout']);
-
 Route::middleware('auth:sanctum')->get('/search', [ApiController::class, 'search']);
 Route::middleware('auth:sanctum')->get('/search_show/{id}', [ApiController::class, 'search_show']);
 
-Route::middleware('auth:sanctum')->get('/charts', [ApiController::class, 'charts']);
+Route::post('/search_post', [ApiController::class, 'search_post']);
+
 
 Route::middleware('auth:sanctum')->get('/child', [ApiController::class, 'child']);
+Route::middleware('auth:sanctum')->get('/child_show/{id}', [ApiController::class, 'child_show']);
