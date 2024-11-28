@@ -31,5 +31,7 @@ Route::post('/search_delete', [HomeController::class, 'search_delete'])->name('s
 Route::get('/chart', [HomeController::class, 'chart'])->name('chart');
 
 Route::get('/child', [ChildController::class, 'child'])->name('child');
+Route::get('/edit_child/{id}', [ChildController::class, 'edit_child'])->name('edit_child');
+Route::post('/edit_child_update', [ChildController::class, 'edit_child_update'])->name('edit_child_update');
 Route::post('/child_create', [ChildController::class, 'child_create'])->name('child_create');
 Route::post('/child_delete', [ChildController::class, 'child_delete'])->name('child_delete');

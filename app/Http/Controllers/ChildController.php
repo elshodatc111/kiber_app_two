@@ -44,4 +44,25 @@ class ChildController extends Controller
         $Search->delete();
         return redirect()->back()->with('success', "Deleted success");
     }
+    public function edit_child($id){
+        $Region = Region::get();
+        $Search = Child::find($id);
+        return view('edit_child',compact('Search','Region'));
+    }
+    public function edit_child_update(Request $request){
+        $request->validate([
+            'id' => 'required',
+            'region_id' => 'required',
+            'fio' => 'required',
+            'birthday' => 'required',
+            'about' => 'required',
+        ]);
+        $Search = Child::find($request->id);
+        $Search->region_id = $request->region_id;
+        $Search->fio = $request->fio;
+        $Search->birthday = $request->birthday;
+        $Search->about = $request->about;
+        $Search->save();
+        return redirect()->route('child')->with('success', "Malumotlar yangilandi.");
+    }
 }

@@ -12,7 +12,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="{{ route('substance') }}">
-            <span class="nav-link-text ms-1">Substance</span>
+            <span class="nav-link-text ms-1">Extiyot choralar</span>
           </a>
         </li>
         <li class="nav-item">
@@ -27,7 +27,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="{{ route('child') }}">
-            <span class="nav-link-text ms-1">Yo'qolganlar</span>
+            <span class="nav-link-text ms-1">Bedarak yo'qolganlar</span>
           </a>
         </li>
         <li class="nav-item">

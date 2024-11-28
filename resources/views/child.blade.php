@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
-  <title>Home</title>
+  <title>E-Qidruv</title>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
   <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -19,7 +19,7 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand px-4 py-3 m-0" href="index.html">
-        <span class="ms-1 text-sm text-dark">Creative Tim</span>
+        <span class="ms-1 text-sm text-dark">E-Qidruv</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0 mb-2">
@@ -30,7 +30,7 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Yo'qolganlar</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Bedarak yo'qolganlar</a></li>
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -66,7 +66,7 @@
         <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
           <div class="card">
             <div class="card-header pb-0">
-              <h6>Yo'qolganlar</h6>
+              <h6>Bedarak yo'qolganlar</h6>
               <div class="table-responsive p-0">
                 <table class="table table-bordered text-center" border="1" style="font-size:10px;">
                     <tr>
@@ -75,8 +75,8 @@
                       <th>FIO</th>
                       <th>Hudud</th>
                       <th>Tug'ilgan kuni</th>
-                      <th>Malumot</th>
-                      <th>del</th>
+                      <th>Ma'lumot</th>
+                      <th>Yangilash</th>
                     </tr>
                     @forelse($Child as $item)
                     <tr>
@@ -87,10 +87,11 @@
                       <td>{{ $item['birthday'] }}</td>
                       <td>{{ $item['about'] }}</td>
                       <td>
+                        <a href="{{ route('edit_child',$item['id']) }}" class="btn btn-primary p-0 px-1">Taxrirlash</a>
                         <form action="{{ route('child_delete') }}" method="post">
                           @csrf 
                           <input type="hidden" name="id" value="{{ $item['id'] }}">
-                          <button type="submit" class="btn btn-danger m-0 py-0">del</button>
+                          <button type="submit" class="btn btn-danger m-0 py-0">O'chirish</button>
                         </form>
                       </td>
                     </tr>
@@ -107,7 +108,7 @@
         <div class="col-lg-4 col-md-6">
           <div class="card h-100">
             <div class="card-header pb-0">
-              <h6>Yangi yo'qolgan</h6>
+              <h6>Yangi Bedarak yo'qolgan</h6>
               <form action="{{ route('child_create') }}" method="post" enctype="multipart/form-data">
                 @csrf 
                 <label for="region_id">Hudud</label>
@@ -124,7 +125,7 @@
                 <label for="birthday">Tyg'ilgan haqida</label>
                 <input type="date" name="birthday" required style="border: 1px solid black;" class="form-control">
                 <label for="about">Yo'qolganligi haqida ma'lumot</label>
-                <textarea name="about" required style="border: 1px solid black;" class="form-control"></textarea>
+                <textarea name="about" required style="border: 1px solid black;height:200px;" class="form-control"></textarea>
                 <button class="btn btn-primary mt-2 w-100">Saqlash</button>
               </form>
             </div>

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
-  <title>Home</title>
+  <title>E-Qidruv</title>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
   <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -20,7 +20,7 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand px-4 py-3 m-0" href="{{ route('home') }}">
-        <span class="ms-1 text-sm text-dark">Creative Tim</span>
+        <span class="ms-1 text-sm text-dark">E-Qidruv</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0 mb-2">
@@ -75,7 +75,7 @@
                       <th>FIO</th>
                       <th>Guvohnama raqami</th>
                       <th>Ro'yhatga olindi</th>
-                      <th>Deleted</th>
+                      <th>O'chirish</th>
                     </tr>
                     @forelse($User as $item)
                     <tr>
@@ -87,7 +87,7 @@
                         <form action="{{ route('create_user_deleted') }}" method="post">
                           @csrf 
                           <input type="hidden" name="id" value="{{ $item['id'] }}">
-                          <button class="btn btn-danger m-0 py-0">del</button>
+                          <button class="btn btn-danger m-0 py-0">O'chirish</button>
                         </form>
                       </td>
                     </tr>

@@ -4,17 +4,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>E-Qidruv</title>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
-  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
-  <link id="pagestyle" href="assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
+  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
 </head>
-
 <body class="g-sidenav-show  bg-gray-100">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2  bg-white my-2" id="sidenav-main">
     <div class="sidenav-header">
@@ -31,7 +30,7 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Hududlar</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Bedarak yo'qolgan taxrirlash</a></li>
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -50,7 +49,7 @@
       </div>
     </nav>
     <div class="container-fluid py-2">
-    @if (Session::has('success'))
+      @if (Session::has('success'))
           <div class="alert alert-success alert-dismissible fade show" role="alert">
               <i class="bi bi-check-circle me-1"></i>
               {{Session::get('success') }}
@@ -62,56 +61,29 @@
               {{Session::get('error') }}
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
-      @endif
+      @endif      
       <div class="row mb-4">
-        <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
-          <div class="card">
-            <div class="card-header pb-0">
-              <h6>Hududlar</h6>
-              <div class="table-responsive p-0">
-                <table class="table table-bordered text-center" border="1" style="font-size:10px;">
-                    <tr>
-                      <th>#</th>
-                      <th>Hudud kodi</th>
-                      <th>Hudud nomi</th>
-                      <th>Hudud yaratildi</th>
-                      <th>O'chirish</th>
-                    </tr>
-                    @forelse($Region as $item)
-                    <tr>
-                      <td>{{ $loop->index+1 }}</td>
-                      <td>{{ $item['coato'] }}</td>
-                      <td>{{ $item['name'] }}</td>
-                      <td>{{ $item['created_at'] }}</td>
-                      <td>
-                        <form action="{{ route('region_deleted') }}" method="post">
-                          @csrf 
-                          <input type="hidden" name="id" value="{{ $item['id'] }}">
-                          <button type="submit" class="btn btn-danger m-0 py-0">O'chirish</button>
-                        </form>
-                      </td>
-                    </tr>
-                    @empty
-                    <tr>
-                      <td colspan=5 class="text-center">Hududlar mavjud emas</td>
-                    </tr>
-                    @endforelse
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
+        <div class="col-12">
           <div class="card h-100">
             <div class="card-header pb-0">
-              <h6>Yangi hudud</h6>
-              <form action="{{ route('region_create') }}" method="post">
+              <h6>Bedarak yo'qolgan taxrirlash</h6>
+              <form action="{{ route('edit_child_update') }}" method="post" enctype="multipart/form-data">
                 @csrf 
-                <label for="">Hudud kodi</label>
-                <input type="number" required name="coato" style="border:1px solid black" class="form-control">
-                <label for="">Hudud nomi</label>
-                <input type="text" required name="name" style="border:1px solid black" class="form-control">
-                <button class="btn btn-primary mt-2 w-100">Hududni saqlash</button>
+                <label for="region_id">Hudud</label>
+                <select name="region_id" required style="border:1px solid black" class="form-select">
+                  <option value="">tanlang</option>
+                  @foreach($Region as $item)
+                    <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                  @endforeach
+                </select>
+                <input type="hidden" name="id" value="{{ $Search['id'] }}">
+                <label for="fio">FIO</label>
+                <input type="text" name="fio" value="{{ $Search['fio'] }}" required style="border: 1px solid black;" class="form-control">
+                <label for="birthday">Tyg'ilgan haqida</label>
+                <input type="date" name="birthday" value="{{ $Search['birthday'] }}" required style="border: 1px solid black;" class="form-control">
+                <label for="about">Yo'qolganligi haqida ma'lumot</label>
+                <textarea name="about" required style="border: 1px solid black;height:200px;" class="form-control">{{ $Search['about'] }}</textarea>
+                <button class="btn btn-primary mt-2 w-100">Saqlash</button>
               </form>
             </div>
           </div>
@@ -120,13 +92,13 @@
     </div>
   </main>
   
-  <script src="assets/js/core/popper.min.js"></script>
-  <script src="assets/js/core/bootstrap.min.js"></script>
-  <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="assets/js/plugins/chartjs.min.js"></script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/chartjs.min.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="assets/js/material-dashboard.min.js?v=3.2.0"></script>
+  <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
 </body>
 
 </html>
